@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using ShortcodeValidation.Api.Features.FundTransfer;
 using ShortcodeValidation.Api.Infrastructure.Database;
 
 public class HandleMpesaCallback
@@ -7,7 +6,6 @@ public class HandleMpesaCallback
     public static async Task<IResult> Handle(
         MpesaCallbackRequest request,
         AppDbContext db,
-        RabbitMqPublisher publisher,
         ILogger<HandleMpesaCallback> logger)
     {
         var existing = await db.Transactions
@@ -37,8 +35,6 @@ public class HandleMpesaCallback
         db.Transactions.Add(transaction);
         await db.SaveChangesAsync();
 
-        // 🔥 Publish event
-        publisher.Publish(new { transaction.Id });
 
         return Results.Ok("Accepted");
     }
