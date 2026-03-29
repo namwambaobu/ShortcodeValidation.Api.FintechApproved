@@ -11,6 +11,9 @@ public class Transaction
     public string? FailureReason { get; set; }
 
     public string ExternalReference { get; set; } = default!;
+    public int RetryCount { get; set; } = 0;
+    public int MaxRetries { get; set; } = 3;
 
     public DateTime CreatedOn { get; set; }
+    
 }
