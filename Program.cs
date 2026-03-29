@@ -18,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 builder.Services.AddHostedService<TransactionProcessor>();
 builder.Services.AddSingleton<RabbitMqPublisher>();
+builder.Services.AddHostedService<OutboxProcessor>();
 builder.Services.AddHostedService<TransactionConsumer>();
 // ✅ Add services
 builder.Services.AddEndpointsApiExplorer();
